@@ -11,7 +11,8 @@ public record ProdutoResponseDTO(
         String descricao,
         BigDecimal preco,
         String categoria,
-        String imagem
+        String imagem,
+        Integer quantidade
 ) {
     public static  ProdutoResponseDTO toDto(Produto produto) {
         return new ProdutoResponseDTO(
