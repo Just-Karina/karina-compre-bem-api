@@ -4,10 +4,11 @@ import com.senai.karina.compre_bem_api.dto.ProdutoRequestDTO;
 import com.senai.karina.compre_bem_api.dto.ProdutoResponseDTO;
 import com.senai.karina.compre_bem_api.service.ProdutoService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -18,18 +19,16 @@ public class ProdutoController {
     private final ProdutoService produtoService;
 
     @GetMapping
-    public List<ProdutoResponseDTO> findAll() {
-        return produtoService.findAll();
+    public Page<ProdutoResponseDTO> findAll(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size,
+            @RequestParam(required = false) String busca) {
+        return produtoService.findAll(busca, PageRequest.of(page, Math.max(1, Math.min(size, 50))));
     }
 
     @GetMapping("/{id}")
-    public ProdutoResponseDTO findById(UUID id) {
+    public ProdutoResponseDTO findById(@PathVariable UUID id) {
         return produtoService.findById(id);
-    }
-
-    @GetMapping("/filtro")
-    public List<ProdutoResponseDTO> findByFiltro(String filtro) {
-        return produtoService.findByFiltro(filtro);
     }
 
     @PostMapping
