@@ -14,6 +14,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping(value = "api/v1/produtos")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*")
 public class ProdutoController {
 
     private final ProdutoService produtoService;
@@ -31,6 +32,11 @@ public class ProdutoController {
         return produtoService.findById(id);
     }
 
+    @GetMapping("/filtro")
+    public Page<ProdutoResponseDTO> findByFiltro(String filtro, @PageableDefault(size = 20) Pageable pageable){
+        return.produtoService.findByFiltro(filtro, pageable);
+
+    }
     @PostMapping
     public ProdutoResponseDTO save(@Valid @RequestBody ProdutoRequestDTO produto) {
         return produtoService.save(produto);

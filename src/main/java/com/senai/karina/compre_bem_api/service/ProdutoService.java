@@ -34,6 +34,10 @@ public class ProdutoService {
         return ProdutoResponseDTO.toDto(produto);
     }
 
+    public Page<ProdutoResponseDTO> findByFiltro(String filtro, Pageable pageable){
+        return produtoRepository.findByFiltro(filtro, pageable).map(ProdutoResponseDTO::toDto);
+    }
+
     public ProdutoResponseDTO save(ProdutoRequestDTO produto) {
         Produto produtoSalvo = produtoRepository.save(Produto.toEntity(produto));
         return ProdutoResponseDTO.toDto(produtoSalvo);
