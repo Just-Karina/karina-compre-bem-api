@@ -41,6 +41,7 @@ public class Produto {
         produto.setPreco(produtoRequestDTO.preco());
         produto.setCategoria(produtoRequestDTO.categoria());
         produto.setImagem(produtoRequestDTO.imagem());
+        produtro.setQuantidade(produtoRequestDTO.quantidade());
         return produto;
     }
 }
