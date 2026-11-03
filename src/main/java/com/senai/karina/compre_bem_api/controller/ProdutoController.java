@@ -33,7 +33,7 @@ public class ProdutoController {
     }
 
     @GetMapping("/filtro")
-    public Page<ProdutoResponseDTO> findByFiltro(String filtro, @PageableDefault(size = 20) Pageable pageable){
+    public Page<ProdutoResponseDTO> findByFiltro(@RequestParam(defaultValue = "") String filtro, @PageableDefault(size = 20, sort = "nome") Pageable pageable){
         return.produtoService.findByFiltro(filtro, pageable);
 
     }
@@ -47,8 +47,9 @@ public class ProdutoController {
         return produtoService.update(produtoId, produto);
     }
 
-    @DeleteMapping
-    public void delete(UUID produtoId) {
+    
+    @DeleteMapping("/{produtoId}")
+    public void delete(@PathVariable UUID produtoId) {
         produtoService.delete(produtoId);
     }
 }
